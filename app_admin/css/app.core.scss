@@ -1,0 +1,137 @@
+$xs: 0px;
+$sm: 360px;
+$md: 768px;
+$lg: 1280px;
+$xl: 1440px;
+
+.wrap{
+  margin: 0 auto;
+}
+
+@media( min-width: $xs ){
+  .wrap{
+    width: 100%;
+  }
+}
+@media( min-width: $sm ){
+  .wrap{
+    width: $sm;
+  }
+}
+@media( min-width: $md ){
+  .wrap{
+    width: $md;
+  }
+}
+@media( min-width: $lg ){
+  .wrap{
+    width: $lg;
+  }
+}
+@media( min-width: $xl ){
+  .wrap{
+    width: $xl;
+  }
+}
+
+.password-strength{
+  .message{
+    white-space: pre;
+    padding: 10px;
+    &:empty{
+      display: none;
+    }
+  }
+  .track{
+    padding: 10px;
+    display: inline-block;
+    width: 100%;
+    box-sizing: border-box;
+    background-color: #333;
+  }
+  .track{
+    .section{
+      height: 10px;
+      display: inline-block;
+      width: 20%;
+      border: 1px solid #333;
+      box-sizing: border-box;
+      float: left;
+    }
+  }
+  &[data-score="0"]{
+
+    background-color: #ddd;
+    color: #f2f2f2;
+
+    .track{
+      .section{
+        background-color: #f2f2f2;
+      }
+    }
+  }
+  &[data-score="1"]{
+
+    background-color: #B8312F;
+    color: #f2f2f2;
+
+    .track{
+      .section{
+        background-color: #B8312F;
+        &:nth-child( n + 2 ){
+          background-color: #f2f2f2
+        }
+      }
+    }
+  }
+  &[data-score="2"]{
+
+    background-color: #F37934;
+    color: #f2f2f2;
+
+    .track {
+      .section{
+        background-color: #F37934;
+        &:nth-child( n + 3 ){
+          background-color: #f2f2f2;
+        }
+      }
+    }
+  }
+  &[data-score="3"]{
+
+    background-color: #FBA026;
+    color: #f2f2f2;
+
+    .track {
+      .section{
+        background-color: #FBA026;
+        &:nth-child( n + 4 ){
+          background-color: #f2f2f2;
+        }
+      }
+    }
+  }
+  &[data-score="4"]{
+    background-color: #54ACD2;
+    color: #f2f2f2;
+    .track {
+      .section{
+        background-color: #54ACD2;
+        &:nth-child( n + 5 ){
+          background-color: #f2f2f2;
+        }
+      }
+    }
+  }
+  &[data-score="5"]{
+    background-color: #41A85F;
+    color: #f2f2f2;
+    .track {
+      display: none;
+      .section{
+        background-color: #41A85F;
+      }
+    }
+  }
+}
