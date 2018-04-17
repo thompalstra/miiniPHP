@@ -1,0 +1,190 @@
+.wrap {
+  margin: 0 auto;
+}
+
+html, body {
+  background-color: #ddd;
+}
+
+.form.form-admin .form-collection {
+  padding: 10px;
+  background-color: white;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+}
+
+.form.form-admin .form-row {
+  margin-bottom: 10px;
+  padding: 10px;
+  display: block;
+  overflow: auto;
+  background-color: #eee;
+}
+
+.form.form-admin .form-row .form-label {
+  width: 20%;
+  float: left;
+  padding: 10px;
+  box-sizing: border-box;
+  background-color: white;
+}
+
+.form.form-admin .form-row .form-label .attribute {
+  font-weight: bold;
+  color: #111;
+  font-size: 18px;
+}
+
+.form.form-admin .form-row .form-label .description {
+  font-weight: normal;
+  color: #333;
+  font-size: 16px;
+}
+
+.form.form-admin .form-row .form-control {
+  width: 80%;
+  float: left;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.form.form-admin .form-row .form-control input {
+  width: 100%;
+}
+
+.form.form-admin .form-row .form-control input[type="text"], .form.form-admin .form-row .form-control input[type="password"] {
+  padding: 10px;
+  outline: 0;
+  border: 1px solid #333;
+  color: #111;
+  background-color: white;
+}
+
+@media (min-width: 0px) {
+  .wrap {
+    width: 100%;
+  }
+}
+
+@media (min-width: 360px) {
+  .wrap {
+    width: 360px;
+  }
+}
+
+@media (min-width: 768px) {
+  .wrap {
+    width: 768px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .wrap {
+    width: 1280px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .wrap {
+    width: 1440px;
+  }
+}
+
+.password-strength .message {
+  white-space: pre;
+  padding: 10px;
+}
+
+.password-strength .message:empty {
+  display: none;
+}
+
+.password-strength .track {
+  padding: 0px;
+  display: inline-block;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.password-strength .track .section {
+  height: 10px;
+  display: inline-block;
+  width: 20%;
+  border: 1px solid #ddd;
+  box-sizing: border-box;
+  float: left;
+}
+
+.password-strength[data-score="0"] {
+  background-color: #ddd;
+  color: #f2f2f2;
+}
+
+.password-strength[data-score="0"] .track .section {
+  background-color: #f2f2f2;
+}
+
+.password-strength[data-score="1"] {
+  background-color: #B8312F;
+  color: #f2f2f2;
+}
+
+.password-strength[data-score="1"] .track .section {
+  background-color: #B8312F;
+}
+
+.password-strength[data-score="1"] .track .section:nth-child(n + 2) {
+  background-color: #f2f2f2;
+}
+
+.password-strength[data-score="2"] {
+  background-color: #F37934;
+  color: #f2f2f2;
+}
+
+.password-strength[data-score="2"] .track .section {
+  background-color: #F37934;
+}
+
+.password-strength[data-score="2"] .track .section:nth-child(n + 3) {
+  background-color: #f2f2f2;
+}
+
+.password-strength[data-score="3"] {
+  background-color: #FBA026;
+  color: #f2f2f2;
+}
+
+.password-strength[data-score="3"] .track .section {
+  background-color: #FBA026;
+}
+
+.password-strength[data-score="3"] .track .section:nth-child(n + 4) {
+  background-color: #f2f2f2;
+}
+
+.password-strength[data-score="4"] {
+  background-color: #54ACD2;
+  color: #f2f2f2;
+}
+
+.password-strength[data-score="4"] .track .section {
+  background-color: #54ACD2;
+}
+
+.password-strength[data-score="4"] .track .section:nth-child(n + 5) {
+  background-color: #f2f2f2;
+}
+
+.password-strength[data-score="5"] {
+  background-color: #41A85F;
+  color: #f2f2f2;
+}
+
+.password-strength[data-score="5"] .track {
+  display: none;
+}
+
+.password-strength[data-score="5"] .track .section {
+  background-color: #41A85F;
+}

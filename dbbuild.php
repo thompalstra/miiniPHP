@@ -1,89 +1,48 @@
 <?php
-$prefix = "project";
+// $initial = str_replace( '{$prefix}', $prefix, $initial );
 
-$initial = <<<MYSQL
-  CREATE TABLE {$prefix}_post (
-    id                INT(11) AUTO_INCREMENT PRIMARY KEY
-    post_type_id      INT(11)
-    title             VARCHAR(255)
-    descriptions      TEXT
-    is_published      TINYINT(1)
-  )
-
-  CREATE TABLE {$prefix}_post_type (
-    id                INT(11) AUTO_INCREMENT PRIMARY KEY
-    title             VARCHAR(255)
-    label_singular    VARCHAR(255)
-    label_plural      VARCHAR(255)
-    is_system         TINYINT(1)
-  )
-
-  CREATE TABLE {$prefix}_post_type_field (
-    id                INT(11) AUTO_INCREMENT PRIMARY KEY
-    post_type_field   INT(11)
-    slug              VARCHAR(255)
-    label_singular    VARCHAR(255)
-    label_plural      VARCHAR(255)
-    field_type        VARCHAR(255)
-    field_value       TEXT
-  )
-
-  CREATE TABLE {$prefix}_category (
-    id                INT(11) AUTO_INCREMENT PRIMARY KEY
-    title             VARCHAR(255)
-    slug              VARCHAR(255)
-  )
-
-  CREATE TABLE {$prefix}_post_category (
-    id                INT(11) AUTO_INCREMENT PRIMARY KEY
-    post_id           INT(11)
-    category_id       INT(11)
-  )
-MYSQL;
-$initial = str_replace( '{$prefix}', $prefix, $initial );
-
-var_dump( DB_USER ); die;
-
-echo '<pre>';
-var_dump($initial); die;
-
-create_table( "{$prefix}_post", array(
-  'id' => 'AI PK',
-  'post_type_id' => 'INT(11)',
-  'title' => 'VARCHAR(255)',
-  'description' => 'TEXT',
-  'is_published' => 'TINYINT(1)'        // indicates if the post type can be shown
-) );
-
-create_table( "{$prefix}_post_type", array(
-  'id' => 'AI PK',
-  'title' => 'VARCHAR(255)',
-  'label_singular' => 'VARCHAR(255)',
-  'label_plural' => 'VARCHAR(255)',
-  'is_system' => 'TINYINT(1)'             // indicates if the post type can be deleted
-) );
-
-create_table( "{$prefix}_post_type_field", array(
-  'id' => 'AI PK',
-  'post_type_id' => 'INT(11)',
-  'slug' => 'VARCHAR(255)',
-  'label_singular' => 'VARCHAR(255)',
-  'label_plural' => 'VARCHAR(255)',
-  'field_type' => 'VARCHAR(255)',
-  'field_value' => 'TEXT'
-) );
-
-create_table( "{$prefix}_category", array(
-  'id' => 'AI PK',
-  'title' => 'VARCHAR(255)',
-  'slug' => 'VARCHAR(255)',
-) );
-
-create_table( "{$prefix}_post_category", array(
-  'id' => 'AI PK',
-  "post_id" => 'INT(11)',
-  "category_id" => 'INT(11)'
-) );
+// var_dump( DB_USER ); die;
+//
+// echo '<pre>';
+// var_dump($initial); die;
+//
+// create_table( "{$prefix}_post", array(
+//   'id' => 'AI PK',
+//   'post_type_id' => 'INT(11)',
+//   'title' => 'VARCHAR(255)',
+//   'description' => 'TEXT',
+//   'is_published' => 'TINYINT(1)'        // indicates if the post type can be shown
+// ) );
+//
+// create_table( "{$prefix}_post_type", array(
+//   'id' => 'AI PK',
+//   'title' => 'VARCHAR(255)',
+//   'label_singular' => 'VARCHAR(255)',
+//   'label_plural' => 'VARCHAR(255)',
+//   'is_system' => 'TINYINT(1)'             // indicates if the post type can be deleted
+// ) );
+//
+// create_table( "{$prefix}_post_type_field", array(
+//   'id' => 'AI PK',
+//   'post_type_id' => 'INT(11)',
+//   'slug' => 'VARCHAR(255)',
+//   'label_singular' => 'VARCHAR(255)',
+//   'label_plural' => 'VARCHAR(255)',
+//   'field_type' => 'VARCHAR(255)',
+//   'field_value' => 'TEXT'
+// ) );
+//
+// create_table( "{$prefix}_category", array(
+//   'id' => 'AI PK',
+//   'title' => 'VARCHAR(255)',
+//   'slug' => 'VARCHAR(255)',
+// ) );
+//
+// create_table( "{$prefix}_post_category", array(
+//   'id' => 'AI PK',
+//   "post_id" => 'INT(11)',
+//   "category_id" => 'INT(11)'
+// ) );
 //
 // project_post
 // COLUMN                VALUE

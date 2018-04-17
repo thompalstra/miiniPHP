@@ -9,7 +9,6 @@ $ds = DIRECTORY_SEPARATOR;
 $dir = __DIR__;
 $dirname = dirname( __DIR__ );
 
-include( "{$dir}{$ds}app-config.php");
 include( "{$dir}{$ds}app_includes{$ds}app{$ds}application.php" );
 
 $app = Application::start( array(

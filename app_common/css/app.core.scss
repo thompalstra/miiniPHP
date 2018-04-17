@@ -4,8 +4,71 @@ $md: 768px;
 $lg: 1280px;
 $xl: 1440px;
 
+$color-default: #111;
+$color-accent-light: #333;
+
 .wrap{
   margin: 0 auto;
+}
+
+html, body{
+  background-color: #ddd;
+}
+
+.form{
+  &.form-admin{
+    .form-collection{
+      padding: 10px;
+      background-color: white;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+    }
+    .form-row{
+
+      margin-bottom: 10px;
+      padding: 10px;
+
+      display: block;
+      overflow: auto;
+
+      background-color: #eee;
+      .form-label{
+        width: 20%;
+        float: left;
+        padding: 10px;
+        box-sizing: border-box;
+        background-color: white;
+
+        .attribute{
+          font-weight: bold;
+          color: $color-default;
+          font-size: 18px;
+        }
+        .description{
+          font-weight: normal;
+          color: $color-accent-light;
+          font-size: 16px;
+        }
+      }
+      .form-control{
+        width: 80%;
+        float: left;
+        padding: 10px;
+        box-sizing: border-box;
+        input{
+          width: 100%;
+          &[type="text"],
+          &[type="password"]{
+            padding: 10px;
+            outline: 0;
+            border: 1px solid $color-accent-light;
+            color: $color-default;
+            background-color: white;
+          }
+        }
+      }
+    }
+  }
 }
 
 @media( min-width: $xs ){
@@ -43,18 +106,17 @@ $xl: 1440px;
     }
   }
   .track{
-    padding: 10px;
+    padding: 0px;
     display: inline-block;
     width: 100%;
     box-sizing: border-box;
-    background-color: #333;
   }
   .track{
     .section{
       height: 10px;
       display: inline-block;
       width: 20%;
-      border: 1px solid #333;
+      border: 1px solid #ddd;
       box-sizing: border-box;
       float: left;
     }
