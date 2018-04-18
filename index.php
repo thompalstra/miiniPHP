@@ -15,7 +15,8 @@ $app = Application::start( array(
   'ds' => $ds,
   'dir' => $dir,
   'dirname' => $dirname,
-  'theme' => 'default'
+  'theme' => 'default',
+  'basePath' => $dir,
 ) );
 if( $app->isFresh ){
   if( $_SERVER['REQUEST_URI'] == '/install' ){

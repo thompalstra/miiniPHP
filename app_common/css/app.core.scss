@@ -7,12 +7,36 @@ $xl: 1440px;
 $color-default: #111;
 $color-accent-light: #333;
 
+
+
+$color-action-main: blue;
+$color-action-accent: lighten( $color-action-main, 10% );
+
 .wrap{
   margin: 0 auto;
 }
 
 html, body{
   background-color: #ddd;
+}
+
+[class^="btn-"].large{
+  padding: 20px 15px;;
+}
+[class^="btn-"].small{
+  padding: 10px 5px;;
+}
+
+.inactive-action-main,
+.active-action-main:hover{
+  color: blue;
+  background-color: red;
+}
+
+.inactive-action-accent,
+.active-action-accent:hover{
+  color: red;
+  background-color: blue;
 }
 
 .form{

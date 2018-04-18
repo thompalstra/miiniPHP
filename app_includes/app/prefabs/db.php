@@ -20,12 +20,23 @@ $initial = <<<MYSQL
     is_published      TINYINT(1)
   );
 
+  INSERT INTO {$prefix}post (
+    ( id, post_type_id, title, description, is_published )
+    VALUES ( 1, 1, "Mijn pagina", description, is_published )
+  );
+
+
   CREATE TABLE IF NOT EXISTS {$prefix}post_type (
     id                INT(11) AUTO_INCREMENT PRIMARY KEY,
     title             VARCHAR(255),
     label_singular    VARCHAR(255),
     label_plural      VARCHAR(255),
     is_system         TINYINT(1)
+  );
+
+  INSERT INTO {$prefix}post_type (
+    ( id, title, label_singular, label_plural, is_system )
+    VALUES ( 0, "Pagina", "Paginas", 1 )
   );
 
   CREATE TABLE IF NOT EXISTS {$prefix}post_type_field (

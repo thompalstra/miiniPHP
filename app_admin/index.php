@@ -1,5 +1,6 @@
 <?php
 $app = get_app();
+$app->basePath = "{$app->dir}{$app->ds}app_admin{$app->ds}";
 
 function handle_path( $path ){
   if( $path == '/' ){
@@ -33,17 +34,17 @@ function get_template(){
 
 }
 
-function get_partial( $path ){
-  // render partial
-  $app = get_app();
-  $fp = "{$app->dir}{$app->ds}app_admin{$app->ds}{$path}.php";
-
-  ob_start();
-  require( $fp );
-  $content = ob_get_contents();
-  ob_end_clean();
-  echo $content;
-}
+// function get_partial( $path ){
+//   // render partial
+//   $app = get_app();
+//   $fp = "{$app->dir}{$app->ds}app_admin{$app->ds}{$path}.php";
+//
+//   ob_start();
+//   require( $fp );
+//   $content = ob_get_contents();
+//   ob_end_clean();
+//   echo $content;
+// }
 
 function get_content(){
   // render view

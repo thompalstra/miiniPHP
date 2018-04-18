@@ -8,6 +8,9 @@ class App{
 class Application{
 
   public $isFresh = true;
+  public $partialExtensions = [
+    '', 'php', 'html'
+  ];
 
   public static function start( $options ){
     $app = new self();
@@ -18,6 +21,7 @@ class Application{
     load_app_config();
 
     $app->isFresh = !( defined('APP_NAME') && defined('APP_INSTALLED') );
+
     return $app;
   }
   public function install(){
@@ -90,8 +94,6 @@ class Query{
     $db_user = DB_USER;
     $db_password = DB_PASSWORD;
 
-    // phpinfo(); die;
-
     return new PDO("mysql:host={$db_host};dbname={$db_name}", "{$db_user}", "{$db_password}");
   }
 
@@ -120,6 +122,30 @@ function load_app_config(){
   }
 }
 
+function get_partial( $path ){
+  // render partial
+  $app = get_app();
+
+  if( $path[0] == '/' ){
+    $path = $app->dir . $path;
+  } else {
+    $path = $app->basePath . $path;
+  }
+
+  foreach( $app->partialExtensions as $ext ) :
+    $path = "$path.$ext";
+    $result = false;
+    if( $result = file_exists( $path ) ) :
+      ob_start();
+      require( $path );
+      $content = ob_get_contents();
+      ob_end_clean();
+      echo $content;
+    endif;
+  endforeach;
+  return $result;
+}
+
 function query_posts( $post_name, $query ){
   $q = new Query();
   $prefix = App::$app->prefix;
@@ -132,5 +158,7 @@ function query_execute( $command ){
   $q = new Query();
   return $q->execute( $command );
 }
+
+
 
 ?>
