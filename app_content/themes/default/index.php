@@ -1,6 +1,6 @@
 <?php
 $app = get_app();
-$app->basePath = "{$app->dir}{$app->ds}app_content{$app->ds}themes{$app->ds}{$app->theme}{$app->ds}";
+$app->basePath = "{$app->dir}/app_content/themes/{$app->theme}/";
 
 function handle_path( $path ){
   if( $path == '/' ){
@@ -13,7 +13,7 @@ function render(){
   // render template
   $app = get_app();
 
-  $fp = "{$app->basePath}home-template.php";
+  $fp = "{$app->basePath}default-template.php";
 
   ob_start();
   require( $fp );
@@ -38,7 +38,7 @@ function get_template(){
 function get_content(){
   // render view
   $app = get_app();
-  return get_partial( $app->path );
+  return get_partial( "$app->path" );
 }
 
 

@@ -22,7 +22,6 @@
         <?php get_content() ?>
       </div>
       <div>
-        <?php get_partial( 'footer' ) ?>
       </div>
     </main>
     <?php get_footer() ?>

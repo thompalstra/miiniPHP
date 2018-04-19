@@ -8,8 +8,9 @@ class App{
 class Application{
 
   public $isFresh = true;
+  public $prefix;
   public $partialExtensions = [
-    '', 'php', 'html'
+    '', '.php', '.html'
   ];
 
   public static function start( $options ){
@@ -29,6 +30,9 @@ class Application{
     return include( "{$app->dir}{$app->ds}install.php" );
   }
   public function run(){
+
+    $this->prefix = APP_PREFIX;
+
     return $this->handle( $this->parse() );
   }
   public function parse(){
@@ -59,17 +63,22 @@ class Application{
 
   public function handle( $route ){
     App::$app->route = $route;
+
     if( $route['subdomain'] == 'admin' ){
-      include( "{$this->dir}{$this->ds}app_admin{$this->ds}index.php" );
+      include( "{$this->dir}/app_admin/index.php" );
     } else {
-      include( "{$this->dir}{$this->ds}app_content{$this->ds}themes{$this->ds}{$this->theme}{$this->ds}index.php" );
+      include( "{$this->dir}/app_content/themes/{$this->theme}/index.php" );
     }
   }
 }
 
 class Query{
 
-  public $params;
+  public $params = [
+    'SELECT' => null,
+    'FROM' => null,
+    'WHERE' => []
+  ];
 
   public function __construct( $options = [] ){
     foreach( $options as $k => $v ){
@@ -78,14 +87,111 @@ class Query{
   }
 
   public function select( $select ){
-    $this->params['SELECT'] = $select;
+    $this->params['SELECT'] = "SELECT $select";
+    return $this;
   }
   public function from( $from ){
-    $this->params['FROM'] = $from;
+    $this->params['FROM'] = "FROM $from";
+    return $this;
+  }
+
+  public function where( $params ){
+    $this->params['WHERE'][] = ['WHERE'=>$params];
+    return $this;
+  }
+  public function andWhere( $params ){
+    $this->params['WHERE'][] = ['AND'=>$params];
+  }
+  public function orWhere( $params ){
+    $this->params['WHERE'][] = ['OR'=>$params];
   }
 
   public function createCommand(){
-    $this->command = "";
+    $this->commandList = [
+      $this->params['SELECT'],
+      $this->params['FROM']
+    ];
+    foreach( $this->params['WHERE'] as $group ){
+      foreach( $group as $k => $whereGroup ){
+        $first = $whereGroup[0];
+        if( in_array( strtoupper($whereGroup[0]), ['AND', 'OR'] ) ){
+          $glue = $whereGroup[0];
+          array_shift($whereGroup);
+          $options = $whereGroup;
+          $this->commandList[] = "$k ( " . $this->createWhere( $glue, $options ) . " )";
+        }
+      }
+    }
+    return implode(' ', $this->commandList);
+  }
+
+  public function createWhere( $glue, $options ){
+    $lines = [];
+    foreach( $options as $k => $inner ) {
+      if( in_array( strtoupper($k), ['AND', 'OR'] ) ){
+        $lines[] = $this->createWhere( $k, $v );
+      } else {
+        if( isset($inner[0]) && in_array( strtoupper( $inner[0] ), ['AND', 'OR'] ) ){
+
+          $pa = $inner[0];
+          array_shift($inner);
+          $pb = $inner;
+
+          $lines[] = $this->createWhere( $pa, $pb );
+        } else {
+          $lines[] = $this->createSelector( $inner );
+        }
+      }
+    }
+    $command = implode( " $glue " , $lines);
+    return "( $command )";
+  }
+
+  public function createGroup(){
+
+  }
+
+  public function createSelector( $options ){
+    if( count( $options ) == 1 ){
+      reset($options);
+      $key = key($options);
+
+      $glue = '=';
+      $column = $key;
+      $value = $options[$key];
+    } else if( count( $options ) == 3 ){
+      $glue = $options[0];
+      $column = $options[1];
+      $value = $options[2];
+    }
+
+    if( is_array( $value ) ){
+      $values = [];
+      foreach( $value as $v ){
+        $values[] = $this->createValue( $v );
+      }
+      $value = "(" . implode(",", $values) . ")";
+    } else {
+      $value = $this->createValue( $value );
+    }
+
+    return "$column = $value";
+  }
+
+  public function createValue( $value ){
+    if( $value == null ){
+      return "NULL";
+    } else if( is_string( $value ) ){
+      return '"' . $value . '"';
+    }
+    return $value;
+  }
+
+  public function one(){
+    return $this->fetchOne();
+  }
+  public function all(){
+    return $this->fetchAll();
   }
 
   public function connect(){
@@ -94,21 +200,37 @@ class Query{
     $db_user = DB_USER;
     $db_password = DB_PASSWORD;
 
-    return new PDO("mysql:host={$db_host};dbname={$db_name}", "{$db_user}", "{$db_password}");
+    $dbh = new PDO("mysql:host={$db_host};dbname={$db_name}", "{$db_user}", "{$db_password}");
+    $dbh->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
+
+    return $dbh;
   }
 
   public function fetchOne(){
-    $command = $this->createCommand();
+    $command= $this->createCommand();
+    $dbh = $this->connect();
+    $sth = $dbh->prepare( $command );
+    $sth->execute();
+    return $sth->fetch();
   }
   public function fetchAll(){
-    $command = $this->createCommand();
+    $command= $this->createCommand();
+    $dbh = $this->connect();
+    $sth = $dbh->prepare( $command );
+    $sth->execute();
+    return $sth->fetchAll();
   }
 
   public function execute( $command ){
     $dbh = $this->connect();
-    $sth =$dbh->prepare( $command );
-    return $sth->execute();
+    $sth = $dbh->prepare( $command );
+    $r = $sth->execute();
+    return $r;
   }
+}
+
+class Post{
+
 }
 
 function get_app(){
@@ -131,13 +253,13 @@ function get_partial( $path ){
   } else {
     $path = $app->basePath . $path;
   }
-
   foreach( $app->partialExtensions as $ext ) :
-    $path = "$path.$ext";
+    $fp = "{$path}{$ext}";
     $result = false;
-    if( $result = file_exists( $path ) ) :
+    // var_dump( $fp );
+    if( $result = file_exists( $fp ) ) :
       ob_start();
-      require( $path );
+      require( $fp );
       $content = ob_get_contents();
       ob_end_clean();
       echo $content;

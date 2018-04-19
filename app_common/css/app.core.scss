@@ -9,8 +9,26 @@ $color-accent-light: #333;
 
 
 
-$color-action-main: blue;
-$color-action-accent: lighten( $color-action-main, 10% );
+$color-action-main: #3498db;
+$color-action-accent: lighten( $color-action-main, 5% );
+
+$color-success-main: #2ecc71;
+$color-success-accent: lighten( $color-success-main, 5% );
+
+$color-info-main: #1abc9c;
+$color-info-accent: lighten( $color-info-main, 5% );
+
+$color-epic-main: #9b59b6;
+$color-epic-accent: lighten( $color-epic-main, 5% );
+
+$color-gray-main: #bbb;
+$color-gray-accent: lighten( #bbbbbb, 5% );
+
+$color-fg-dark-main: #555;
+$color-fg-dark-accent: darken( $color-fg-dark-main, 5% );
+
+$color-fg-light-main: #f2f2f2;
+$color-fg-light-accent: lighten( $color-fg-light-main, 5% );
 
 .wrap{
   margin: 0 auto;
@@ -19,24 +37,157 @@ $color-action-accent: lighten( $color-action-main, 10% );
 html, body{
   background-color: #ddd;
 }
-
-[class^="btn-"].large{
-  padding: 20px 15px;;
-}
-[class^="btn-"].small{
-  padding: 10px 5px;;
+// [class^='btn-']{
+.btn{
+  padding: 10px 15px;
+  &.large{
+    padding: 15px 20px;
+  }
+  &.small{
+    padding: 5px 10px;
+  }
+  &.flat{
+    border-width: 1px;
+    border-style: solid;
+  }
 }
 
 .inactive-action-main,
 .active-action-main:hover{
-  color: blue;
-  background-color: red;
+  color: $color-fg-light-main;
+  background-color: $color-action-main;
+  border-color: $color-action-main;
 }
 
 .inactive-action-accent,
 .active-action-accent:hover{
-  color: red;
-  background-color: blue;
+  color: $color-fg-light-accent;
+  background-color: $color-action-accent;
+  border-color: $color-action-accent;
+}
+
+.inactive-action-flat-main,
+.active-action-flat-main:hover{
+  background-color: transparent;
+  color: $color-action-main;
+  border-color: $color-action-main;
+}
+
+.inactive-action-flat-accent,
+.active-action-flat-accent:hover{
+  background-color: transparent;
+  color: $color-action-accent;
+  border-color: $color-action-accent;
+}
+
+.inactive-success-main,
+.active-success-main:hover{
+  color: $color-fg-light-main;
+  background-color: $color-success-main;
+  border-color: $color-success-main;
+}
+
+.inactive-success-accent,
+.active-success-accent:hover{
+  color: $color-fg-light-accent;
+  background-color: $color-success-accent;
+  border-color: $color-success-accent;
+}
+
+.inactive-success-flat-main,
+.active-success-flat-main:hover{
+  background-color: transparent;
+  color: $color-success-main;
+  border-color: $color-success-main;
+}
+
+.inactive-success-flat-accent,
+.active-success-flat-accent:hover{
+  background-color: transparent;
+  color: $color-success-accent;
+  border-color: $color-success-accent;
+}
+
+.inactive-info-main,
+.active-info-main:hover{
+  color: $color-fg-light-main;
+  background-color: $color-info-main;
+  border-color: $color-info-main;
+}
+
+.inactive-info-accent,
+.active-info-accent:hover{
+  color: $color-fg-light-accent;
+  background-color: $color-info-accent;
+  border-color: $color-info-accent;
+}
+
+.inactive-info-flat-main,
+.active-info-flat-main:hover{
+  background-color: transparent;
+  color: $color-info-main;
+  border-color: $color-info-main;
+}
+
+.inactive-info-flat-accent,
+.active-info-flat-accent:hover{
+  background-color: transparent;
+  color: $color-info-accent;
+  border-color: $color-info-accent;
+}
+
+.inactive-epic-main,
+.active-epic-main:hover{
+  color: $color-fg-light-main;
+  background-color: $color-epic-main;
+  border-color: $color-epic-main;
+}
+
+.inactive-epic-accent,
+.active-epic-accent:hover{
+  color: $color-fg-light-accent;
+  background-color: $color-epic-accent;
+  border-color: $color-epic-accent;
+}
+
+.inactive-epic-flat-main,
+.active-epic-flat-main:hover{
+  background-color: transparent;
+  color: $color-epic-main;
+  border-color: $color-epic-main;
+}
+
+.inactive-epic-flat-accent,
+.active-epic-flat-accent:hover{
+  background-color: transparent;
+  color: $color-epic-accent;
+  border-color: $color-epic-accent;
+}
+
+.inactive-gray-main,
+.active-gray-main:hover{
+  color: $color-fg-dark-main;
+  background-color: $color-gray-main;
+}
+
+.inactive-gray-accent,
+.active-gray-accent:hover{
+  color: $color-fg-dark-accent;
+  background-color: $color-gray-accent;
+}
+
+.inactive-gray-flat-main,
+.active-gray-flat-main:hover{
+  background-color: transparent;
+  color: $color-gray-main;
+  border-color: $color-gray-main;
+}
+
+.inactive-gray-flat-accent,
+.active-gray-flat-accent:hover{
+  background-color: transparent;
+  color: $color-gray-accent;
+  border-color: $color-gray-accent;
 }
 
 .form{

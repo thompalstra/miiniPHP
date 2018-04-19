@@ -67,39 +67,11 @@
             <input name="Config[app][prefix]" placeholder="Project_" value="project_" type="text"/>
           </div>
         </div>
-        <div class='form-row'>
-          <div class='form-label'>
-            <div class='attribute'>Username</div>
-            <div class='description'>The username your user is going to use to log into the administrative panel.</div>
-          </div>
-          <div class='form-control'>
-            <input name="Config[app][user][username]" placeholder="admin" value="admin" type="text"/>
-          </div>
-        </div>
-        <div class='form-row'>
-          <div class='form-label'>
-            <div class='attribute'>Password</div>
-            <div class='description'>The password of your user.</div>
-          </div>
-          <div class='form-control'>
-            <input name="Config[app][user][password]" placeholder="admin" value="admin" type="password" />
-            <div class="password-strength" data-score="0">
-              <div class='message'></div>
-              <div class="track">
-                <span class='section'></span>
-                <span class='section'></span>
-                <span class='section'></span>
-                <span class='section'></span>
-                <span class='section'></span>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
 
     <div class='wrap'>
-      <button type="submit" class="btn-flat active-action-main inactive-action-accent large">install</button>
+      <button type="submit" class="btn flat inactive-gray-main active-action-accent large">install</button>
     </div>
 
   </form>
@@ -121,44 +93,6 @@
         value = value + "_";
         document.querySelector('[name="Config[app][prefix]"]').value = value;
         console.log('chg');
-      } );
-
-      document.querySelector('[name="Config[app][user][password]"]').addEventListener( 'input', function( event ) {
-        var score = 0;
-        var pwd = this.value;
-        var messages = [];
-
-        if( /[a-z]/.test( pwd ) ){
-          score += 1;
-
-        } else { message = "Password should contain at least 1 lowercase letter."; }
-
-        if( /[A-Z]/.test( pwd ) ){
-          score += 1;
-        } else { message = "Password should contain at least 1 UPPERCASE letter."; };
-
-        if( /[0-9]/.test( pwd ) ){
-          score += 1;
-        } else { message = "Password should contain at least 1 number."; };
-
-        if( /[!@#$%^&*()]/.test( pwd ) ){
-          score += 1;
-        } else { message = "Password should contain at least 1 special character <em>! @ # $ % ^ &  ( )</em>."; };
-
-        if( ( pwd.length > 6 ) ){
-          score += 1;
-        } else { message = "Password should be at least 6 characters."; };
-
-        document.querySelector('.message').innerHTML = message;
-
-        // score += ( /[a-z]/.test( pwd ) ) ? 1 : 0;
-        // score += ( /[A-Z]/.test( pwd ) ) ? 1 : 0;
-        // score += ( /[0-9]/.test( pwd ) ) ? 1 : 0;
-        // score += ( /[!@#$%^&*()]/.test( pwd ) ) ? 1 : 0;
-        // score += ( pwd.length > 6 ) ? 1 : 0;
-
-        this.nextElementSibling.dataset.score = score;
-
       } );
     } );
   </script>

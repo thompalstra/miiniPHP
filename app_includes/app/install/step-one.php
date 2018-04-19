@@ -7,8 +7,6 @@ if( $_POST ){
 
   $app_name = $config->app['name'];
   $app_prefix = $config->app['prefix'];
-  $app_user = $config->app['user']['username'];
-  $app_password = $config->app['user']['password'];
   $db_name = $config->app['db']['name'];
   $db_user = $config->app['db']['user'];
   $db_password = $config->app['db']['password'];
@@ -19,7 +17,7 @@ if( $_POST ){
   $myfile = fopen("{$app->dir}/app-config.php", "w") or die("Unable to config file!");
   fwrite($myfile, $config);
   fclose($myfile);
-
-  $app->redirect('/install');
+  
+  header("Location: /install"); exit();
 }
-get_partial( "/app_includes/partials/setup.php" );
+get_partial( "/app_includes/app/install/partials/step-one.php" );

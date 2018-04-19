@@ -9,7 +9,5 @@ define( "DB_PASSWORD", "{$db_password}" );
 define( "APP_NAME",    "{$app_name}");
 define( "APP_PREFIX",    "{$app_prefix}");
 
-define( "APP_USER", "{$app_user}" );
-define( "APP_PASSWORD", "{$app_user}" );
 CONFIG;
 ?>
