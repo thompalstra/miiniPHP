@@ -1,59 +1,31 @@
 <?php
-$app = get_app();
+$app = &App::$app;
+$app->c = 0;
 $app->basePath = "{$app->dir}{$app->ds}app_admin{$app->ds}";
+// add_hook( 'handle_path', function( $path ) {
+//   echo 'hp'; die;
+//     if( $path == '/' ){
+//       $path = 'home';
+//     }
+//     App::$app->path = $path;
+//     die;
+//     hook( 'render' );
+// } );
+add_hook( 'render', function(){
+    $fp = $app->basePath . "default-template.php";
+    ob_start();
+    require( $fp );
+    $content = ob_get_contents();
+    ob_end_clean();
+    echo $content;
+} );
+// handle_path( $route['path'] );
 
-function handle_path( $path ){
-  if( $path == '/' ){
-    $path = 'home';
-  }
-  get_app()->path = $path;
-  echo render();
+// hook( 'render' );
+
+if( $route['path'] == '/' ){
+  $route['path'] = 'home';
 }
-function render(){
-  // render template
-  $app = get_app();
-  $fp = "{$app->dir}{$app->ds}app_admin{$app->ds}default-template.php";
-
-  ob_start();
-  require( $fp );
-  $content = ob_get_contents();
-  ob_end_clean();
-
-  return $content;
-}
-
-function get_head(){
-  echo get_partial( 'head' );
-}
-
-function get_footer(){
-  echo get_partial( 'footer' );
-}
-
-function get_template(){
-
-}
-
-// function get_partial( $path ){
-//   // render partial
-//   $app = get_app();
-//   $fp = "{$app->dir}{$app->ds}app_admin{$app->ds}{$path}.php";
-//
-//   ob_start();
-//   require( $fp );
-//   $content = ob_get_contents();
-//   ob_end_clean();
-//   echo $content;
-// }
-
-function get_content(){
-  // render view
-  $app = get_app();
-  return get_partial( $app->path );
-}
-
-
-
-
-handle_path( $route['path'] );
+App::$app->path = $route['path'];
+hook( 'render' );
 ?>

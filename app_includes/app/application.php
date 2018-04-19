@@ -12,18 +12,25 @@ class Application{
   public $partialExtensions = [
     '', '.php', '.html'
   ];
+  public $books = [];
 
-  public static function start( $options ){
-    $app = new self();
-    App::$app = &$app;
+  public function __construct( $options = [] ){
+    App::$app = &$this;
+    $this->query = include( __DIR__ . DIRECTORY_SEPARATOR . 'query.php' );
+    $this->hooks = include( __DIR__ . DIRECTORY_SEPARATOR . 'hooks.php' );
+
     foreach( $options as $k => $v ){
-      $app->$k = $v;
+      $this->$k = $v;
     }
+
     load_app_config();
 
-    $app->isFresh = !( defined('APP_NAME') && defined('APP_INSTALLED') );
+    $this->isFresh = !( defined('APP_NAME') && defined('APP_INSTALLED') );
 
-    return $app;
+
+  }
+  public static function start( $options ){
+    return ( new self( $options ) );;
   }
   public function install(){
     $app = $this;
@@ -72,165 +79,10 @@ class Application{
   }
 }
 
-class Query{
-
-  public $params = [
-    'SELECT' => null,
-    'FROM' => null,
-    'WHERE' => []
-  ];
-
-  public function __construct( $options = [] ){
-    foreach( $options as $k => $v ){
-      $this->$k = $v;
-    }
-  }
-
-  public function select( $select ){
-    $this->params['SELECT'] = "SELECT $select";
-    return $this;
-  }
-  public function from( $from ){
-    $this->params['FROM'] = "FROM $from";
-    return $this;
-  }
-
-  public function where( $params ){
-    $this->params['WHERE'][] = ['WHERE'=>$params];
-    return $this;
-  }
-  public function andWhere( $params ){
-    $this->params['WHERE'][] = ['AND'=>$params];
-  }
-  public function orWhere( $params ){
-    $this->params['WHERE'][] = ['OR'=>$params];
-  }
-
-  public function createCommand(){
-    $this->commandList = [
-      $this->params['SELECT'],
-      $this->params['FROM']
-    ];
-    foreach( $this->params['WHERE'] as $group ){
-      foreach( $group as $k => $whereGroup ){
-        $first = $whereGroup[0];
-        if( in_array( strtoupper($whereGroup[0]), ['AND', 'OR'] ) ){
-          $glue = $whereGroup[0];
-          array_shift($whereGroup);
-          $options = $whereGroup;
-          $this->commandList[] = "$k ( " . $this->createWhere( $glue, $options ) . " )";
-        }
-      }
-    }
-    return implode(' ', $this->commandList);
-  }
-
-  public function createWhere( $glue, $options ){
-    $lines = [];
-    foreach( $options as $k => $inner ) {
-      if( in_array( strtoupper($k), ['AND', 'OR'] ) ){
-        $lines[] = $this->createWhere( $k, $v );
-      } else {
-        if( isset($inner[0]) && in_array( strtoupper( $inner[0] ), ['AND', 'OR'] ) ){
-
-          $pa = $inner[0];
-          array_shift($inner);
-          $pb = $inner;
-
-          $lines[] = $this->createWhere( $pa, $pb );
-        } else {
-          $lines[] = $this->createSelector( $inner );
-        }
-      }
-    }
-    $command = implode( " $glue " , $lines);
-    return "( $command )";
-  }
-
-  public function createGroup(){
-
-  }
-
-  public function createSelector( $options ){
-    if( count( $options ) == 1 ){
-      reset($options);
-      $key = key($options);
-
-      $glue = '=';
-      $column = $key;
-      $value = $options[$key];
-    } else if( count( $options ) == 3 ){
-      $glue = $options[0];
-      $column = $options[1];
-      $value = $options[2];
-    }
-
-    if( is_array( $value ) ){
-      $values = [];
-      foreach( $value as $v ){
-        $values[] = $this->createValue( $v );
-      }
-      $value = "(" . implode(",", $values) . ")";
-    } else {
-      $value = $this->createValue( $value );
-    }
-
-    return "$column = $value";
-  }
-
-  public function createValue( $value ){
-    if( $value == null ){
-      return "NULL";
-    } else if( is_string( $value ) ){
-      return '"' . $value . '"';
-    }
-    return $value;
-  }
-
-  public function one(){
-    return $this->fetchOne();
-  }
-  public function all(){
-    return $this->fetchAll();
-  }
-
-  public function connect(){
-    $db_host = DB_HOST;
-    $db_name = DB_NAME;
-    $db_user = DB_USER;
-    $db_password = DB_PASSWORD;
-
-    $dbh = new PDO("mysql:host={$db_host};dbname={$db_name}", "{$db_user}", "{$db_password}");
-    $dbh->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
-
-    return $dbh;
-  }
-
-  public function fetchOne(){
-    $command= $this->createCommand();
-    $dbh = $this->connect();
-    $sth = $dbh->prepare( $command );
-    $sth->execute();
-    return $sth->fetch();
-  }
-  public function fetchAll(){
-    $command= $this->createCommand();
-    $dbh = $this->connect();
-    $sth = $dbh->prepare( $command );
-    $sth->execute();
-    return $sth->fetchAll();
-  }
-
-  public function execute( $command ){
-    $dbh = $this->connect();
-    $sth = $dbh->prepare( $command );
-    $r = $sth->execute();
-    return $r;
-  }
-}
-
 class Post{
+  public function get_field( $field ){
 
+  }
 }
 
 function get_app(){
@@ -244,37 +96,85 @@ function load_app_config(){
   }
 }
 
-function get_partial( $path ){
-  // render partial
-  $app = get_app();
-
-  if( $path[0] == '/' ){
-    $path = $app->dir . $path;
-  } else {
-    $path = $app->basePath . $path;
+function add_hook( $name, $function ){
+  // $app->hooks[$name] = $function;
+  if( !isset( $app->hooks[$name] ) ){
+    $app->hooks[$name] = [];
   }
-  foreach( $app->partialExtensions as $ext ) :
-    $fp = "{$path}{$ext}";
-    $result = false;
-    // var_dump( $fp );
-    if( $result = file_exists( $fp ) ) :
-      ob_start();
-      require( $fp );
-      $content = ob_get_contents();
-      ob_end_clean();
-      echo $content;
-    endif;
-  endforeach;
-  return $result;
 }
 
-function query_posts( $post_name, $query ){
-  $q = new Query();
+function hook( $name, $a = null ){
+  if( is_array( App::$app->hooks[$name] ) ){
+    if( isset( App::$app->hooks[$name]['custom'] ) ){
+      return call_user_func_array(  App::$app->hooks[$name]['custom'], ( is_array( $a ) ? $a : [$a] )  );
+    } else {
+      return call_user_func_array(  App::$app->hooks[$name]['native'], ( is_array( $a ) ? $a : [$a] )  );
+    }
+  }
+  // if( isset( App::$app->hooks[$name] ) && App::$app->hooks[$name]['custom'] ){
+  //
+  // } else if( App::$app->hooks[$name] && App::$app->hooks[$name]['native'] ){
+  //
+  // }
+}
+
+function get_setting( $key ){
   $prefix = App::$app->prefix;
-  $q->select( "*" );
-  $q->from( "{$prefix}_post" );
-  $q->params = $query;
-  return $q;
+  return ( new Query() )
+    ->select('*')
+    ->from("{$prefix}settings")
+    ->where([
+      ['settings_key'=>$key]
+    ])->one()['settings_value'];
+}
+
+function handle_path( $path ){
+  return hook( 'handle_path', $path );
+}
+function get_partial( $path ){
+  return hook( 'get_partial', $path );
+}
+function get_head(){
+  return hook( 'get_head' );
+}
+function get_content(){
+  return hook( 'get_content' );
+}
+function get_footer(){
+  return hook( 'get_footer' );
+}
+
+function query_posts( $params ){
+  // $post_type = ( isset( $params['post_type'] ) );
+
+  $prefix = App::$app->prefix;
+
+  $query = new Query([
+    'class' => 'Post'
+  ]);
+  $query->from("{$prefix}post");
+  $query->select("*");
+  $query->leftJoin( "{$prefix}post_type pt ON pt.id = {$prefix}post.post_type_id" );
+
+  $post_type = $params['post_type'];
+  unset( $params['post_type'] );
+
+  $query->where( [
+    'and',
+    ['is_published' => 1],
+    ['pt.slug' => $post_type ],
+  ] );
+  $query->andWhere( $params['params'] );
+
+  if( isset( $params['limit'] ) ){
+    $query->limit( $params['limit'] );
+  }
+
+  if( isset( $params['offset'] ) ){
+    $query->offset( $params['offset'] );
+  }
+
+  return $query->all();
 }
 function query_execute( $command ){
   $q = new Query();
