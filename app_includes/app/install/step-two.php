@@ -12,7 +12,7 @@ if( $_POST ){
   $app = get_app();
 
   include( "{$app->dir}{$app->ds}app_includes{$app->ds}app{$app->ds}prefabs{$app->ds}db.php" );
-
+  // var_dump( $initial ); die;
   if( query_execute( $initial ) ){
     echo 'installation success';
     $myfile = fopen("{$app->dir}{$app->ds}app-config.php", "a") or die("Unable to config file!");

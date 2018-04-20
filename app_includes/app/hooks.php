@@ -1,8 +1,19 @@
 <?php
-return array (
-  'render' => [
-    'native' => function(){
-        $template = App::$app->page['template'];
+
+class HookManager{
+  public static $hooks = [];
+
+  public static function add( $name, $callable){
+    self::$hooks[ $name ] = $callable;
+  }
+  public static function execute( $name, $arguments = [] ){
+    return call_user_func_array( self::$hooks[$name], ( is_array( $arguments ) ? $arguments : [$arguments] ) );
+  }
+}
+
+HookManager::$hooks = array (
+  'render' => function(){
+        $template = App::$app->post['template'];
         $fp = App::$app->basePath . "{$template}.php";
 
         ob_start();
@@ -10,12 +21,10 @@ return array (
         $content = ob_get_contents();
         ob_end_clean();
         echo $content;
-    }
-    ],
-  'handle_path' => [
-    'native' => function( $path ){
+  },
+  'handle_path' => function( $path ){
         $prefix = App::$app->prefix;
-        App::$app->page = query_posts( [
+        App::$app->post = query_posts( [
           'post_type' => get_setting('page_post_type'),
           'params' => [
             [ get_setting('page_search_by') => $path ]
@@ -23,16 +32,14 @@ return array (
           'limit' => 1,
         ] )[0];
 
-        if( empty( App::$app->page ) ){
-          App::$app->page = [
+        if( empty( App::$app->post ) ){
+          App::$app->post = [
             'template' => '404'
           ];
         }
         return hook( 'render' );
-    },
-  ],
-  'get_partial' => [
-    'native' => function( $path, $output = false ){
+  },
+  'get_partial' => function( $path, $output = false ){
       $app = get_app();
 
       if( $path[0] == '/' ){
@@ -55,8 +62,7 @@ return array (
           }
         endif;
       endforeach;
-    }
-  ],
+  },
   'get_head' => function(){
     return hook( 'get_partial', "head" );
   },
@@ -64,8 +70,7 @@ return array (
     return hook( 'get_partial', "footer" );
   },
   'get_content' => function(){
-    var_Dump( App::$app->c );
-    return hook( 'get_partial', App::$app->path );
+    echo 'page content goes here';
   },
 )
 ?>

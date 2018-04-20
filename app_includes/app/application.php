@@ -16,8 +16,9 @@ class Application{
 
   public function __construct( $options = [] ){
     App::$app = &$this;
-    $this->query = include( __DIR__ . DIRECTORY_SEPARATOR . 'query.php' );
-    $this->hooks = include( __DIR__ . DIRECTORY_SEPARATOR . 'hooks.php' );
+
+    include( __DIR__ . DIRECTORY_SEPARATOR . 'query.php' );
+    include( __DIR__ . DIRECTORY_SEPARATOR . 'hooks.php' );
 
     foreach( $options as $k => $v ){
       $this->$k = $v;
@@ -96,28 +97,6 @@ function load_app_config(){
   }
 }
 
-function add_hook( $name, $function ){
-  // $app->hooks[$name] = $function;
-  if( !isset( $app->hooks[$name] ) ){
-    $app->hooks[$name] = [];
-  }
-}
-
-function hook( $name, $a = null ){
-  if( is_array( App::$app->hooks[$name] ) ){
-    if( isset( App::$app->hooks[$name]['custom'] ) ){
-      return call_user_func_array(  App::$app->hooks[$name]['custom'], ( is_array( $a ) ? $a : [$a] )  );
-    } else {
-      return call_user_func_array(  App::$app->hooks[$name]['native'], ( is_array( $a ) ? $a : [$a] )  );
-    }
-  }
-  // if( isset( App::$app->hooks[$name] ) && App::$app->hooks[$name]['custom'] ){
-  //
-  // } else if( App::$app->hooks[$name] && App::$app->hooks[$name]['native'] ){
-  //
-  // }
-}
-
 function get_setting( $key ){
   $prefix = App::$app->prefix;
   return ( new Query() )
@@ -126,6 +105,14 @@ function get_setting( $key ){
     ->where([
       ['settings_key'=>$key]
     ])->one()['settings_value'];
+}
+
+function add_hook( $name, $callable ){
+  HookManager::add( $name, $callable );
+}
+
+function hook( $name, $arguments = [] ){
+  return HookManager::execute( $name, $arguments );
 }
 
 function handle_path( $path ){
@@ -145,7 +132,6 @@ function get_footer(){
 }
 
 function query_posts( $params ){
-  // $post_type = ( isset( $params['post_type'] ) );
 
   $prefix = App::$app->prefix;
 
@@ -177,8 +163,7 @@ function query_posts( $params ){
   return $query->all();
 }
 function query_execute( $command ){
-  $q = new Query();
-  return $q->execute( $command );
+  return ( new Query() )->execute( $command );
 }
 
 

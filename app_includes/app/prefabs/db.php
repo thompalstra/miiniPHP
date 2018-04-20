@@ -24,7 +24,7 @@ $initial = <<<MYSQL
 
   INSERT INTO {$prefix}post
     ( post_type_id, title, slug, description, template, is_published )
-    VALUES ( 1, "Home", "/", "My homepage", "default-template" 1 );
+    VALUES ( 1, "Home", "/", "My homepage", "default-template", 1 );
 
   CREATE TABLE IF NOT EXISTS {$prefix}post_type (
     id                INT(11) AUTO_INCREMENT PRIMARY KEY,
