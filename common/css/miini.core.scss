@@ -1,0 +1,416 @@
+$xs: 0px;
+$sm: 360px;
+$md: 768px;
+$lg: 1280px;
+$xl: 1440px;
+
+$color-default: #111;
+$color-accent-light: #333;
+
+$color-white-main: #f2f2f2;
+$color-white-accent: light( $color-white-main, 5% );
+
+$color-action-main: #3498db;
+$color-action-accent: lighten( $color-action-main, 5% );
+
+$color-success-main: #2ecc71;
+$color-success-accent: lighten( $color-success-main, 5% );
+
+$color-info-main: #1abc9c;
+$color-info-accent: lighten( $color-info-main, 5% );
+
+$color-epic-main: #9b59b6;
+$color-epic-accent: lighten( $color-epic-main, 5% );
+
+$color-gray-main: #bbb;
+$color-gray-accent: lighten( #bbbbbb, 5% );
+
+$color-fg-dark-main: #555;
+$color-fg-dark-accent: darken( $color-fg-dark-main, 5% );
+
+$color-fg-light-main: #f2f2f2;
+$color-fg-light-accent: lighten( $color-fg-light-main, 5% );
+
+.wrap{
+  margin: 0 auto;
+}
+
+html, body{
+  background-color: #ddd;
+}
+.btn{
+  padding: 10px 15px;
+
+  border-width: 1px;
+  border-style: solid;
+  background-color: transparent;
+
+  cursor: pointer;
+  &[disabled]{
+    cursor: not-allowed;;
+  }
+  &.large{
+    padding: 15px 20px;
+  }
+  &.small{
+    padding: 5px 10px;
+  }
+  &.flat{
+    border-width: 1px;
+    border-style: solid;
+    // background-color: transparent;
+  }
+}
+
+.inactive-action-main,
+.active-action-main:hover{
+  color: $color-fg-light-main;
+  background-color: $color-action-main;
+  border-color: $color-action-main;
+}
+
+.inactive-action-accent,
+.active-action-accent:hover{
+  color: $color-fg-light-accent;
+  background-color: $color-action-accent;
+  border-color: $color-action-accent;
+}
+
+.inactive-action-flat-main,
+.active-action-flat-main:hover{
+  background-color: transparent;
+  color: $color-action-main;
+  border-color: $color-action-main;
+
+  border-style: solid;
+  border-width: 1px;
+}
+
+.inactive-action-flat-accent,
+.active-action-flat-accent:hover{
+  background-color: transparent;
+  color: $color-action-accent;
+  border-color: $color-action-accent;
+
+  border-style: solid;
+  border-width: 1px;
+}
+
+.inactive-success-main,
+.active-success-main:hover{
+  color: $color-fg-light-main;
+  background-color: $color-success-main;
+  border-color: $color-success-main;
+}
+
+.inactive-success-accent,
+.active-success-accent:hover{
+  color: $color-fg-light-accent;
+  background-color: $color-success-accent;
+  border-color: $color-success-accent;
+}
+
+.inactive-success-flat-main,
+.active-success-flat-main:hover{
+  background-color: transparent;
+  color: $color-success-main;
+  border-color: $color-success-main;
+
+  border-style: solid;
+  border-width: 1px;
+}
+
+.inactive-success-flat-accent,
+.active-success-flat-accent:hover{
+  background-color: transparent;
+  color: $color-success-accent;
+  border-color: $color-success-accent;
+
+  border-style: solid;
+  border-width: 1px;
+}
+
+.inactive-info-main,
+.active-info-main:hover{
+  color: $color-fg-light-main;
+  background-color: $color-info-main;
+  border-color: $color-info-main;
+}
+
+.inactive-info-accent,
+.active-info-accent:hover{
+  color: $color-fg-light-accent;
+  background-color: $color-info-accent;
+  border-color: $color-info-accent;
+}
+
+.inactive-info-flat-main,
+.active-info-flat-main:hover{
+  background-color: transparent;
+  color: $color-info-main;
+  border-color: $color-info-main;
+
+  border-style: solid;
+  border-width: 1px;
+}
+
+.inactive-info-flat-accent,
+.active-info-flat-accent:hover{
+  background-color: transparent;
+  color: $color-info-accent;
+  border-color: $color-info-accent;
+
+  border-style: solid;
+  border-width: 1px;
+}
+
+.inactive-epic-main,
+.active-epic-main:hover{
+  color: $color-fg-light-main;
+  background-color: $color-epic-main;
+  border-color: $color-epic-main;
+}
+
+.inactive-epic-accent,
+.active-epic-accent:hover{
+  color: $color-fg-light-accent;
+  background-color: $color-epic-accent;
+  border-color: $color-epic-accent;
+}
+
+.inactive-epic-flat-main,
+.active-epic-flat-main:hover{
+  background-color: transparent;
+  color: $color-epic-main;
+  border-color: $color-epic-main;
+
+  border-style: solid;
+  border-width: 1px;
+}
+
+.inactive-epic-flat-accent,
+.active-epic-flat-accent:hover{
+  background-color: transparent;
+  color: $color-epic-accent;
+  border-color: $color-epic-accent;
+
+  border-style: solid;
+  border-width: 1px;
+}
+
+.inactive-gray-main,
+.active-gray-main:hover{
+  color: $color-fg-dark-main;
+  background-color: $color-gray-main;
+  border-color: $color-gray-main;
+}
+
+.inactive-gray-accent,
+.active-gray-accent:hover{
+  color: $color-fg-dark-accent;
+  background-color: $color-gray-accent;
+  border-color: $color-gray-accent;
+}
+
+.inactive-gray-flat-main,
+.active-gray-flat-main:hover{
+  background-color: transparent;
+  color: $color-gray-main;
+  border-color: $color-gray-main;
+
+  border-style: solid;
+  border-width: 1px;
+}
+
+.inactive-gray-flat-accent,
+.active-gray-flat-accent:hover{
+  background-color: transparent;
+  color: $color-gray-accent;
+  border-color: $color-gray-accent;
+
+  border-style: solid;
+  border-width: 1px;
+}
+
+.inactive-white-main,
+.active-white-main:hover{
+  color: $color-fg-light-main;
+  background-color: $color-white-main;
+  border-color: $color-white-main;
+}
+
+.inactive-white-accent,
+.active-white-accent:hover{
+  color: $color-fg-light-accent;
+  background-color: $color-white-accent;
+  border-color: $color-white-accent;
+}
+
+.inactive-white-flat-main,
+.active-white-flat-main:hover{
+  background-color: transparent;
+  color: $color-white-main;
+  border-color: $color-white-main;
+
+  border-style: solid;
+  border-width: 1px;
+}
+
+.inactive-white-flat-accent,
+.active-white-flat-accent:hover{
+  background-color: transparent;
+  color: $color-white-accent;
+  border-color: $color-white-accent;
+
+  border-style: solid;
+  border-width: 1px;
+}
+
+.bg-white{
+  background-color: #fff;
+}
+.bg-success{
+  background-color: $color-success-main;
+}
+.fg-white{
+  color: #fff;
+}
+
+$offset-5: 5px;
+$offset-10: 10px;
+$offset-15: 15px;
+$offset-20: 20px;
+
+
+.vp-5{
+  padding-top: $offset-5;
+  padding-bottom: $offset-5;
+}
+.hp-5{
+  padding-left: $offset-5;
+  padding-right: $offset-5;
+}
+.vp-10{
+  padding-top: $offset-10;
+  padding-bottom: $offset-10;
+}
+.hp-10{
+  padding-left: $offset-10;
+  padding-right: $offset-10;
+}
+
+.vp-15{
+  padding-top: $offset-15;
+  padding-bottom: $offset-15;
+}
+.hp-15{
+  padding-left: $offset-15;
+  padding-right: $offset-15;
+}
+
+.pull-left{
+  float: left;
+}
+.pull-right{
+  float: right;
+}
+[class*='cw-']{
+  float: left;
+  display: inline-block;
+  box-sizing: border-box;
+}
+
+@media( min-width: $xs ){
+  .wrap{
+    width: 100%;
+  }
+  .cw-xs-100{ width: 100% }
+  .cw-xs-90{ width: 90% }
+  .cw-xs-80{ width: 80% }
+  .cw-xs-75{ width: 75% }
+  .cw-xs-60{ width: 60% }
+  .cw-xs-50{ width: 50% }
+  .cw-xs-40{ width: 40% }
+  .cw-xs-33{ width: 33.333334%; }
+  .cw-xs-25{ width: 25% }
+  .cw-xs-20{ width: 20% }
+  .cw-xs-10{ width: 10% }
+}
+@media( min-width: $sm ){
+  .wrap{
+    width: $sm;
+  }
+}
+@media( min-width: $md ){
+  .wrap{
+    width: $md;
+  }
+}
+@media( min-width: $lg ){
+  .wrap{
+    width: $lg;
+  }
+}
+@media( min-width: $xl ){
+  .wrap{
+    width: $xl;
+  }
+}
+
+
+.form{
+  &.form-admin{
+    .form-collection{
+      padding: 10px;
+      background-color: white;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+    }
+    .form-row{
+
+      margin-bottom: 10px;
+      padding: 10px;
+
+      display: block;
+      overflow: auto;
+
+      background-color: #eee;
+      .form-label{
+        width: 20%;
+        float: left;
+        padding: 10px;
+        box-sizing: border-box;
+        background-color: white;
+
+        .attribute{
+          font-weight: bold;
+          color: $color-default;
+          font-size: 18px;
+        }
+        .description{
+          font-weight: normal;
+          color: $color-accent-light;
+          font-size: 16px;
+        }
+      }
+      .form-control{
+        width: 80%;
+        float: left;
+        padding: 10px;
+        box-sizing: border-box;
+        input{
+          width: 100%;
+          &[type="text"],
+          &[type="password"]{
+            padding: 10px;
+              box-sizing: border-box;
+            outline: 0;
+            border: 1px solid $color-accent-light;
+            color: $color-default;
+            background-color: white;
+          }
+        }
+      }
+    }
+  }
+}

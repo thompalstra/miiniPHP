@@ -1,30 +1,13 @@
 <?php
-
-ini_set('display_startup_errors', 1);
 ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-
+$dir = __DIR__ . DIRECTORY_SEPARATOR;
 $ds = DIRECTORY_SEPARATOR;
-$dir = __DIR__;
-$dirname = dirname( __DIR__ );
 
-include( "{$dir}{$ds}app_includes{$ds}app{$ds}application.php" );
+include( "{$dir}mii{$ds}autoload.php" );
+include( "{$dir}mii{$ds}app.php" );
 
-$app = Application::start( array(
-  'ds' => $ds,
-  'dir' => $dir,
-  'dirname' => $dirname,
-  'theme' => 'default',
-  'basePath' => $dir,
-) );
-if( $app->isFresh ){
-  if( $_SERVER['REQUEST_URI'] == '/install' ){
-    return $app->install();
-  } else {
-    return $app->redirect('/install');
-  }
-} else {
-  return $app->run();
-}
+return App::run();
 ?>
