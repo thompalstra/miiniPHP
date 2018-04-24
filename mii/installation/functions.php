@@ -41,18 +41,13 @@ function create_database( $post ){
   if( $_POST ){
     $prefix = APP_PREFIX;
 
-    // $config = (object) $_POST['Config'];
-
     $data = \mii\helpers\ObjectHelper::toObject( $post )->Config;
-
-    // $username = $config->app['user']['username'];
-    // $password = $config->app['user']['password'];
 
     $app = get_app();
     include( "{$dir}mii{$ds}files{$ds}mii-db.php" );
     if( query_execute( $initial ) ){
       echo 'installation success';
-      $myfile = fopen(("{$dir}/mii-config.php", "a") or die("Unable to config file!");
+      $myfile = fopen("{$dir}/mii-config.php", "a") or die("Unable to config file!");
 
 $installed = <<<CONFIG
 \r\n

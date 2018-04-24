@@ -13,7 +13,7 @@ class App{
     }
 
     $this->dir = dirname( __DIR__ ) . DIRECTORY_SEPARATOR;
-    $this->rdir = __DIR__;
+    // $this->rdir = __DIR__;
     $this->ds = DIRECTORY_SEPARATOR;
     $this->environment = new Environment();
     $this->controller = new Controller();
@@ -45,7 +45,8 @@ class App{
     $ds = Mii::$app->ds;
 
     if( Mii::$app->isFresh ){
-      include( "{$dir}mii{$ds}installation{$ds}index.php" );
+      // include( "{$dir}mii{$ds}installation{$ds}index.php" );
+      active_directory( "mii{$ds}installation" );
     } else {
       return Mii::$app->handle( Mii::$app->parse() );
     }
@@ -63,5 +64,16 @@ class App{
 function redirect( $path ){
   header("Location: {$path}");
   exit();
+}
+// sets the given relative urls and includes the index.php if it exists at that location
+function active_directory( $path ){
+  $dir = Mii::$app->dir;
+  $ds = Mii::$app->ds;
+  if( file_exists ( "{$dir}{$path}" ) ){
+    Mii::$app->workspace = "{$path}";
+    if( file_exists( "{$path}{$ds}index.php" ) ){
+      include( "{$path}{$ds}index.php" );
+    }
+  }
 }
 ?>
