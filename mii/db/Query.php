@@ -1,5 +1,5 @@
 <?php
-namespace \mii\db;
+namespace mii\db;
 
 class Query{
   public $class = 'DbObject';
@@ -154,8 +154,8 @@ class Query{
     $db_user = DB_USER;
     $db_password = DB_PASSWORD;
 
-    $dbh = new PDO("mysql:host={$db_host};dbname={$db_name}", "{$db_user}", "{$db_password}");
-    $dbh->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
+    $dbh = new \PDO("mysql:host={$db_host};dbname={$db_name}", "{$db_user}", "{$db_password}");
+    $dbh->setAttribute( \PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION );
 
     return $dbh;
   }

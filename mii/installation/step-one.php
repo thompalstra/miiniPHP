@@ -8,7 +8,8 @@
           <div class='description'>The host we should connect to (default localhost).</div>
         </div>
         <div class='form-control'>
-          <input name="MiiConfig[database_host]" placeholder="localhost" value="localhost" type="text"/>
+          <input name="MiiConfig[db_host]" placeholder="localhost" value="<?=$config->db_host?>" type="text"/>
+          <label><?=$config->getFirstError('db_host')?></label>
         </div>
       </div>
       <div class='form-row'>
@@ -17,7 +18,8 @@
           <div class='description'>The name of the database we're going to be connecting to.</div>
         </div>
         <div class='form-control'>
-          <input name="MiiConfig[database_name]" placeholder="admin" value="database" type="text"/>
+          <input name="MiiConfig[db_name]" placeholder="admin" value="<?=$config->db_name?>" type="text"/>
+          <label><?=$config->getFirstError('db_name')?></label>
         </div>
       </div>
       <div class='form-row'>
@@ -26,7 +28,8 @@
           <div class='description'>The username we're going to use to log edit the database with.</div>
         </div>
         <div class='form-control'>
-          <input name="MiiConfig[database_user]" placeholder="root" value="root" type="text"/>
+          <input name="MiiConfig[db_user]" placeholder="root" value="<?=$config->db_user?>" type="text"/>
+          <label><?=$config->getFirstError('db_user')?></label>
         </div>
       </div>
       <div class='form-row'>
@@ -35,7 +38,8 @@
           <div class='description'>The MYSQL user's password.</div>
         </div>
         <div class='form-control'>
-          <input name="MiiConfig[database_password]" placeholder="" value="" type="text"/>
+          <input name="MiiConfig[db_password]" placeholder="" value="<?=$config->db_password?>" type="text"/>
+          <label><?=$config->getFirstError('db_password')?></label>
         </div>
       </div>
     </div>
@@ -48,7 +52,8 @@
           <div class='description'>The name of the website</div>
         </div>
         <div class='form-control'>
-          <input name="MiiConfig[application_name]" placeholder="Project" value="Project" type="text"/>
+          <input name="MiiConfig[app_name]" placeholder="Project" value="<?=$config->app_name?>" type="text"/>
+          <label><?=$config->getFirstError('app_name')?></label>
         </div>
       </div>
       <div class='form-row'>
@@ -57,7 +62,8 @@
           <div class='description'>The prefix that'll be used to base the database tables on <br/> ( ie: myprefix_post )</div>
         </div>
         <div class='form-control'>
-          <input name="MiiConfig[application_prefix]" placeholder="Project_" value="project_" type="text"/>
+          <input name="MiiConfig[app_prefix]" placeholder="Project_" value="<?=$config->app_prefix?>" type="text"/>
+          <label><?=$config->getFirstError('app_prefix')?></label>
         </div>
       </div>
     </div>

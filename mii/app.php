@@ -1,7 +1,7 @@
 <?php
-
 use mii\web\Environment;
 use mii\web\Controller;
+use mii\db\Query;
 
 class App{
 
@@ -75,5 +75,8 @@ function active_directory( $path ){
       include( "{$path}{$ds}index.php" );
     }
   }
+}
+function query_execute( $command ){
+  return ( new Query() )->execute( $command );
 }
 ?>
