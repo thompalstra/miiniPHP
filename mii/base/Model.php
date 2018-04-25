@@ -2,7 +2,7 @@
 namespace mii\base;
 class Model {
 
-  public const SCENARIO_DEFAULT = 'scenario_default';
+  const SCENARIO_DEFAULT = 'scenario_default';
 
   protected $_scenario = 'scenario_default';
 

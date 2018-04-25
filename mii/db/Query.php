@@ -174,7 +174,7 @@ class Query{
     $sth = $dbh->prepare( $command );
     $sth->execute();
     if( $this->class ){
-        $sth->setFetchMode( PDO::FETCH_CLASS, $this->class, array(
+        $sth->setFetchMode( \PDO::FETCH_CLASS, $this->class, array(
           array(
               'isFresh' => false
           )
@@ -189,7 +189,7 @@ class Query{
     $sth = $dbh->prepare( $command );
     $sth->execute();
     if( $this->class ){
-        $sth->setFetchMode( PDO::FETCH_CLASS, $this->class, array(
+        $sth->setFetchMode( \PDO::FETCH_CLASS, $this->class, array(
           array(
               'isFresh' => false
           )

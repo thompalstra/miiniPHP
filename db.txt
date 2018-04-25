@@ -1,0 +1,24 @@
+prefix_object
+	id
+	object_type_id
+	title
+	description
+	slug
+	is_published
+	
+prefix_object_type
+	id
+	title
+	description
+
+prefix_object_field
+	id
+	object_id
+	field_type
+	field_value
+	default_value
+	is_required
+	
+prefix_field
+	id
+	object_type_id

@@ -70,14 +70,14 @@
   </div>
 
   <div class='wrap'>
-    <button type="submit" class="btn flat inactive-gray-main active-action-accent large">install</button>
+    <button type="submit" class="btn flat inactive-action-main active-action-accent large">Create configuration</button>
   </div>
 
 </form>
 
 <script>
   document.addEventListener('DOMContentLoaded', function( event ) {
-    document.querySelector('[name="MiiConfig[app][name]"]').addEventListener( 'change', function( event ) {
+    document.querySelector('[name="MiiConfig[app_name]"]').addEventListener( 'change', function( event ) {
       if( this.value.length == 0 ){
         this.value = this.placeholder;
         this.dispatchEvent( new Event( 'input', {
@@ -86,11 +86,11 @@
         } ) );
       }
     } );
-    document.querySelector('[name="MiiConfig[app][name]"]').addEventListener( 'input', function( event ) {
+    document.querySelector('[name="MiiConfig[app_name]"]').addEventListener( 'input', function( event ) {
       var value = this.value.toLowerCase();
       value = value.replace(/ /g, "_");
       value = value + "_";
-      document.querySelector('[name="MiiConfig[app][prefix]"]').value = value;
+      document.querySelector('[name="MiiConfig[app_prefix]"]').value = value;
       console.log('chg');
     } );
   } );

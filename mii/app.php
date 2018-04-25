@@ -12,14 +12,8 @@ class App{
       $this->$optkey = $optval;
     }
 
-    $this->dir = dirname( __DIR__ ) . DIRECTORY_SEPARATOR;
-    // $this->rdir = __DIR__;
-    $this->ds = DIRECTORY_SEPARATOR;
-    $this->environment = new Environment();
-    $this->controller = new Controller();
-
-    $ds = $this->ds;
-    $dir = $this->dir;
+    $dir = $this->dir = dirname( __DIR__ ) . DIRECTORY_SEPARATOR;
+    $ds = $this->ds = DIRECTORY_SEPARATOR;
 
     if( file_exists( "{$dir}mii{$ds}Mii.php" ) ){
       include( "{$dir}mii{$ds}Mii.php" );
@@ -29,13 +23,21 @@ class App{
     if( file_exists( "{$dir}mii{$ds}hooks.php" ) ){
       include( "{$dir}mii{$ds}hooks.php" );
     } else {
-      echo "Missing essential file: {$dir}mii{$ds}Mii.php."; exit();
+      echo "Missing essential file: {$dir}mii{$ds}hooks.php"; exit();
     }
+
+    Mii::$app = &$this;
+
+
+
     if( file_exists( "{$dir}mii-config.php" ) ){
       include( "{$dir}mii-config.php" );
       $this->isFresh = !( defined('APP_NAME') && defined('APP_INSTALLED') );
     }
-    Mii::$app = &$this;
+
+    $this->environment = new Environment();
+    $this->controller = new Controller();
+
   }
   public static function run( $options = [] ){
 
@@ -45,7 +47,6 @@ class App{
     $ds = Mii::$app->ds;
 
     if( Mii::$app->isFresh ){
-      // include( "{$dir}mii{$ds}installation{$ds}index.php" );
       active_directory( "mii{$ds}installation" );
     } else {
       return Mii::$app->handle( Mii::$app->parse() );
@@ -53,19 +54,33 @@ class App{
   }
 
   public function parse(){
-
+    var_dump($this->environment); die;
   }
 
   public function handle(){
 
   }
+
+  public function redirect( $url ){
+    header("Location: {$url}"); exit();
+  }
+}
+
+function get_setting( $key ){
+  $prefix = APP_PREFIX;
+  return ( new Query() )
+    ->select('*')
+    ->from("{$prefix}settings")
+    ->where([
+      ['settings_key'=>$key]
+    ])->one()['settings_value'];
 }
 
 function redirect( $path ){
   header("Location: {$path}");
   exit();
 }
-// sets the given relative urls and includes the index.php if it exists at that location
+
 function active_directory( $path ){
   $dir = Mii::$app->dir;
   $ds = Mii::$app->ds;

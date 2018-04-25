@@ -6,8 +6,9 @@ class MiiConfig extends \mii\base\Model{
   const SCENARIO_STEP_TWO = 's2';
 
   public $db_host = 'localhost';
-  public $db_name = 'project';
+  public $db_name = 'database';
   public $db_user = 'root';
+  public $db_password = '';
   public $app_name = 'Project';
   public $app_prefix = 'project_';
 

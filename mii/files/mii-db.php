@@ -1,4 +1,5 @@
 <?php
+
 $password = password_hash( $config->password, PASSWORD_DEFAULT );
 $initial = <<<MYSQL
   CREATE TABLE IF NOT EXISTS {$config->app_prefix}user (
@@ -81,5 +82,9 @@ $initial = <<<MYSQL
   INSERT INTO {$config->app_prefix}settings
     ( settings_key, settings_value, description )
     VALUES ( "page_post_type", "page", "Change this attribute, to change the default post type used for displaying pages." );
+
+  INSERT INTO {$config->app_prefix}settings
+    ( settings_key, settings_value, description )
+    VALUES ( "current_theme", "default", "Change this attribute, to change the default theme used for displaying pages." );
 MYSQL;
 ?>
