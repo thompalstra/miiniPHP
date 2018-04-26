@@ -18,11 +18,10 @@ class Environment extends \mii\base\Model{
 
     $ds = \Mii::$app->ds;
 
-    if( $this->name == 'admin' ){
+    if( $this->name == "admin" ){
       $this->directory = "admin";
     } else {
-      $current_theme = get_setting('current_theme');
-      $this->directory = "content{$ds}themes{$ds}{$current_theme}{$ds}";
+      $this->directory = "content{$ds}themes{$ds}";
     }
   }
 }

@@ -82,7 +82,6 @@ class Application{
 class CoreObject{
   public $isFresh = true;
   public function __construct( $options = [] ){
-    var_dump($options); 
     foreach( $options as $optKey => $optValue ){
       $this->$optKey = $optValue;
     }

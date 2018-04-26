@@ -1,7 +1,4 @@
 <?php
-// var_dump(App::$app->queryResult); die;
-var_dump( has_posts() );
-// var_dump( get_posts() ); die;
 
 
 

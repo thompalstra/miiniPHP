@@ -6,8 +6,9 @@ HookManager::$hooks = array(
   'get_partial' => function( $fp, $data = [], $output = false ){
 
     $dir = Mii::$app->dir;
-    $rdir = Mii::$app->rdir;
+    $workspace = Mii::$app->workspace;
     $ds = Mii::$app->ds;
+
     $exts = [
       'php', 'html'
     ];
@@ -16,7 +17,7 @@ HookManager::$hooks = array(
       $fp = substr( $fp, 1, strlen( $fp ) );
       $fp = "{$dir}{$fp}";
     } else {
-      $fp = "{$rdir}{$fp}";
+      $fp = "{$workspace}{$fp}";
     }
 
     if( !file_exists( $fp ) ){
@@ -38,6 +39,12 @@ HookManager::$hooks = array(
       }
     }
   },
+  'render' => function( $path ){
+    include( "{$path}.php" );
+  },
+  'parse' => function( $uri ){
+    echo 'undefined hook "parse"'; exit();
+  },
   'get_content' => function( $fp = null ){
     echo 'na'; die;
   },
@@ -52,9 +59,9 @@ HookManager::$hooks = array(
 function hook( $name, $arguments = [] ){
   if( isset( HookManager::$hooks[$name] ) ){
     if( is_array( $arguments ) ){
-      call_user_func_array( HookManager::$hooks[$name], $arguments );
+      return call_user_func_array( HookManager::$hooks[$name], $arguments );
     } else {
-      call_user_func( HookManager::$hooks[$name], $arguments );
+      return call_user_func( HookManager::$hooks[$name], $arguments );
     }
   } else {
     echo "Attempting to call invalid hook: {$name}.";

@@ -1,10 +1,8 @@
 <?php
 // $initial = str_replace( '{$prefix}', $prefix, $initial );
 
-// var_dump( DB_USER ); die;
 //
 // echo '<pre>';
-// var_dump($initial); die;
 //
 // create_table( "{$prefix}_post", array(
 //   'id' => 'AI PK',

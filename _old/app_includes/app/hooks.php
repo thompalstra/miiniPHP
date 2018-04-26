@@ -53,7 +53,6 @@ HookManager::$hooks = array (
     return App::$app->template;
   },
   'get_partial' => function( $path, $output = false, $options = [] ){
-    var_dump( $post ); die;
       $app = get_app();
 
       if( $path[0] == '/' ){
