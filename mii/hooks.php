@@ -48,11 +48,36 @@ HookManager::$hooks = array(
   'get_content' => function( $fp = null ){
     echo 'na'; die;
   },
-  'head' => function( $common = true ){
+  'head' => function( $output = false ){
+    $dir = Mii::$app->dir;
+    $ds = Mii::$app->ds;
+    $workspace = Mii::$app->workspace;
+    $fp = "{$dir}{$workspace}head.php";
 
+    if( file_exists( "{$dir}{$workspace}head.php" ) ){
+      if( $output ){
+        return include( "{$dir}{$workspace}head.php" );
+      } else {
+        echo include( "{$dir}{$workspace}head.php" );
+      }
+    } else {
+      return false;
+    }
   },
-  'footer' => function( $common = true ){
+  'footer' => function( $output = false ){
+    $dir = Mii::$app->dir;
+    $ds = Mii::$app->ds;
+    $workspace = Mii::$app->workspace;
 
+    if( file_exists( "{$dir}{$workspace}footer.php" ) ){
+      if( $output ){
+        return include( "{$dir}{$workspace}footer.php" );
+      } else {
+        echo include( "{$dir}{$workspace}footer.php" );
+      }
+    } else {
+      return false;
+    }
   }
 );
 

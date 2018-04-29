@@ -6,6 +6,7 @@ $xl: 1440px;
 
 $color-default: #111;
 $color-accent-light: #333;
+$color-border: #ccc;
 
 $color-white-main: #f2f2f2;
 $color-white-accent: light( $color-white-main, 5% );
@@ -365,6 +366,9 @@ $offset-20: 20px;
       background-color: white;
       margin-bottom: 10px;
       border: 1px solid #ccc;
+      .form-row:last-child{
+        margin-bottom: 0;
+      }
     }
     .form-row{
 
@@ -374,7 +378,7 @@ $offset-20: 20px;
       display: block;
       overflow: auto;
 
-      background-color: #eee;
+      border: 1px solid #ccc;
       .form-label{
         width: 20%;
         float: left;
@@ -393,7 +397,20 @@ $offset-20: 20px;
           font-size: 16px;
         }
       }
+      .form-control-prefix{
+        padding: 10px;
+        border: 1px solid $color-border;;
+        border-right: 0;
+            background-color: #eee;
+      }
+      .form-control-suffix{
+        padding: 10px;
+        border: 1px solid $color-border;;
+        border-left: 0;
+            background-color: #eee;
+      }
       .form-control{
+        display: flex;
         width: 80%;
         float: left;
         padding: 10px;
@@ -405,7 +422,7 @@ $offset-20: 20px;
             padding: 10px;
               box-sizing: border-box;
             outline: 0;
-            border: 1px solid $color-accent-light;
+            border: 1px solid $color-border;
             color: $color-default;
             background-color: white;
           }

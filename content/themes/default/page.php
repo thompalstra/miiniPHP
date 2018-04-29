@@ -9,12 +9,11 @@
 ?>
 <?php head(); ?>
 
-  <?php get_partial('partials/components/header') ?>
-
     <section class='wrap'>
-      hoi
+      <div class=''>
+        <h2>Welcome to Miini</h2>
+        <p>It seems that you haven't selected a theme. Please <a href="<?=dashboard_url()?>">log into your dashboard</a> and select and/or install a theme</p>
+      </div>
     </section>
-
-  <?php get_partial('partials/components/footer') ?>
 
 <?php footer(); ?>

@@ -32,7 +32,15 @@ class App{
 
     if( file_exists( "{$dir}mii-config.php" ) ){
       include( "{$dir}mii-config.php" );
-      $this->isFresh = !( defined('APP_NAME') && defined('APP_INSTALLED') );
+      // $this->isFresh = !( defined('APP_NAME') && defined('APP_INSTALLED') );
+    }
+
+    if( !( defined('APP_NAME') && defined('APP_INSTALLED') ) ){
+      $this->isFresh = true;
+      return active_directory( "mii{$ds}installation" );
+    } else {
+      $this->isFresh = false;
+      $this->admin_subdomain = ADMIN_SUBDOMAIN;
     }
 
     $this->environment = new Environment();
@@ -46,30 +54,29 @@ class App{
     $dir = Mii::$app->dir;
     $ds = Mii::$app->ds;
 
-    if( Mii::$app->isFresh ){
-      active_directory( "mii{$ds}installation" );
-    } else {
+    if( !Mii::$app->isFresh ){
       Mii::$app->handle( Mii::$app->parse() );
     }
-
-    get_setting('current_theme');
   }
 
   public function parse(){
 
     $dir = Mii::$app->dir;
     $ds = Mii::$app->ds;
+    Mii::$app->theme = $theme = get_setting('current_theme');
 
     if( $this->environment->name == 'admin' ){
-      active_directory( "admin" );
+      $path = 'admin';
     } else {
-      $theme = Mii::$app->theme;
-      active_directory( "content{$ds}themes{$ds}{$theme}" );
+      $path = "content{$ds}themes{$ds}{$theme}";
     }
+
+    return $path;
   }
 
-  public function handle(){
+  public function handle( $path ){
 
+      active_directory( $path );
   }
 
   public function redirect( $url ){
@@ -93,6 +100,21 @@ function render( $path ){
 function parse( $uri ){
   return hook( 'parse', $uri );
 }
+function site_url(){
+  $parse = parse_url( $_SERVER['HTTP_HOST'] );
+  $host = ( isset( $parse['host'] ) ? $parse['host'] : '' );
+  $port = ( isset( $parse['port'] ) ? ':'. $parse['port'] : '' );
+  return "{$host}{$port}";
+}
+function site_protocol(){
+  return isset($_SERVER["HTTPS"]) ? 'https' : 'http';;
+}
+function dashboard_url(){
+  $admin_subdomain = Mii::$app->admin_subdomain;
+  $protocol = site_protocol();
+  $site_url = site_url();
+  return "{$protocol}{$admin_subdomain}.{$site_url}";
+}
 
 function redirect( $path ){
   header("Location: {$path}");
@@ -104,10 +126,8 @@ function active_directory( $path ){
   $dir = Mii::$app->dir;
   $ds = Mii::$app->ds;
 
-  $env = Mii::$app->environment->directory;
   if( file_exists ( "{$dir}{$path}" ) ){
     Mii::$app->workspace = "{$path}{$ds}";
-
     if( file_exists( "{$dir}{$path}{$ds}functions.php" ) ){
       include( "{$dir}{$path}{$ds}functions.php" );
     }

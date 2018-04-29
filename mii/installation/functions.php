@@ -10,19 +10,31 @@ add_hook( 'get_content', function() {
   $config = new MiiConfig();
 
   if( !file_exists( "{$dir}mii-config.php" ) ) {
-    $config->setScenario( MiiConfig::SCENARIO_STEP_ONE );
-    if( $_POST && $config->load( $_POST) && $config->validate() ) {
+    // first create the config file and add the database constants
+    $config->setScenario( MiiConfig::SCENARIO_DATABASE_CONNECT );
+    if( $_POST && $config->load( $_POST) && $config->validate() ){
       if( create_config( $config ) ){
         redirect('/');
       }
+    } else {
+      get_partial( 'step-one', [ 'config' => $config ] );
     }
-    get_partial( 'step-one', [ 'config' => $config ] );
-  } else {
-    $config->setScenario( MiiConfig::SCENARIO_STEP_TWO );
+  } else if( APP_NAME == "{%config_app_name%}" ) {
+    if( $_POST && $config->load( $_POST) && $config->validate() ){
+      $content = file_get_contents( "{$dir}mii-config.php" );
+      $content = str_replace( "{%config_app_name%}", "{$config->app_name}", $content );
+      $content = str_replace( "{%config_app_prefix%}", "{$config->app_prefix}", $content );
+      $content = str_replace( "{%config_admin_subdomain%}", "{$config->admin_subdomain}", $content );
+      $myfile = fopen("{$dir}/mii-config.php", "w") or die("Unable to config file!");
+      fwrite($myfile, $content);
+      fclose($myfile);
+    }
+    get_partial( 'step-two', [ 'config' => $config ] );
+  } else if( !defined('APP_INSTALLED') ){
     if( $_POST && $config->load( $_POST) && $config->validate() ) {
      create_database( $config );
     }
-    get_partial( 'step-two', [ 'config' => $config ] );
+    get_partial( 'step-three', ['config' => $config ] );
   }
 } );
 
@@ -36,7 +48,7 @@ function create_config( $config ){
   fwrite($myfile, $config);
   fclose($myfile);
 
-  return tue;
+  return true;
 }
 function create_database( $config ){
   $ds = Mii::$app->ds;

@@ -1,41 +1,53 @@
 <form method='POST' action='' class='form form-admin'>
   <div class='wrap'>
+    <h2>Connection</h2>
+    <div class='installation-steps'>
+      <span content="Connection" class='active'></span>
+      <span content="Website"></span>
+      <span content="Database"></span>
+      <span content="Done!"></span>
+    </div>
     <div class='form-collection'>
-      <h2>MySQL MiiConfiguration</h2>
       <div class='form-row'>
         <div class='form-label'>
-          <div class='attribute'>MYSQL host</div>
-          <div class='description'>The host we should connect to (default localhost).</div>
+          <div class='attribute'>Database host</div>
+          <div class='description'>The domain or IP-address of the host we're going to be connecting to.</div>
         </div>
         <div class='form-control'>
           <input name="MiiConfig[db_host]" placeholder="localhost" value="<?=$config->db_host?>" type="text"/>
           <label><?=$config->getFirstError('db_host')?></label>
         </div>
       </div>
+    </div>
+    <div class='form-collection'>
       <div class='form-row'>
         <div class='form-label'>
-          <div class='attribute'>MYSQL database</div>
-          <div class='description'>The name of the database we're going to be connecting to.</div>
+          <div class='attribute'>Database name</div>
+          <div class='description'>The name of the database we're going to use.</div>
         </div>
         <div class='form-control'>
           <input name="MiiConfig[db_name]" placeholder="admin" value="<?=$config->db_name?>" type="text"/>
           <label><?=$config->getFirstError('db_name')?></label>
         </div>
       </div>
+    </div>
+    <div class='form-collection'>
       <div class='form-row'>
         <div class='form-label'>
-          <div class='attribute'>MYSQL username</div>
-          <div class='description'>The username we're going to use to log edit the database with.</div>
+          <div class='attribute'>Username</div>
+          <div class='description'>The username we will use to performs changes to the database.</div>
         </div>
         <div class='form-control'>
           <input name="MiiConfig[db_user]" placeholder="root" value="<?=$config->db_user?>" type="text"/>
           <label><?=$config->getFirstError('db_user')?></label>
         </div>
       </div>
+    </div>
+    <div class='form-collection'>
       <div class='form-row'>
         <div class='form-label'>
-          <div class='attribute'>MYSQL password</div>
-          <div class='description'>The MYSQL user's password.</div>
+          <div class='attribute'>Password</div>
+          <div class='description'>The password for the user.</div>
         </div>
         <div class='form-control'>
           <input name="MiiConfig[db_password]" placeholder="" value="<?=$config->db_password?>" type="text"/>
@@ -43,34 +55,10 @@
         </div>
       </div>
     </div>
-
-    <div class='form-collection'>
-      <h2>Application MiiConfiguration</h2>
-      <div class='form-row'>
-        <div class='form-label'>
-          <div class='attribute'>Website name</div>
-          <div class='description'>The name of the website</div>
-        </div>
-        <div class='form-control'>
-          <input name="MiiConfig[app_name]" placeholder="Project" value="<?=$config->app_name?>" type="text"/>
-          <label><?=$config->getFirstError('app_name')?></label>
-        </div>
-      </div>
-      <div class='form-row'>
-        <div class='form-label'>
-          <div class='attribute'>Database prefix</div>
-          <div class='description'>The prefix that'll be used to base the database tables on <br/> ( ie: myprefix_post )</div>
-        </div>
-        <div class='form-control'>
-          <input name="MiiConfig[app_prefix]" placeholder="Project_" value="<?=$config->app_prefix?>" type="text"/>
-          <label><?=$config->getFirstError('app_prefix')?></label>
-        </div>
-      </div>
-    </div>
   </div>
 
   <div class='wrap'>
-    <button type="submit" class="btn flat inactive-action-main active-action-accent large">Create configuration</button>
+    <button type="submit" class="btn flat inactive-action-main active-action-accent large pull-right">Create configuration</button>
   </div>
 
 </form>
